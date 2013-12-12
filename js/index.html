@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>PAYMILL Hack Presentation - Powered by reveal.js</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- PAYMILL styles -->
+		<link rel="stylesheet" href="css/paymill.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<!-- Opening Slide -->
+				<section data-background="#f05000">
+					<h1>PAYMILL</h1>
+					<h3>Hack Presentation</h3>
+					<p>
+						<small>Created by <a href="http://elsmore.me">Mike Elsmore</a> / <a href="http://twitter.com/ukmadlz">@ukmadlz</a></small>
+					</p>
+				</section>
+
+				<!-- Top down view -->
+				<section>
+
+					<section>
+					
+						<h1>What is PAYMILL?</h1>
+					
+						<aside class="notes">
+							<p>PAYMILL is a easy to integrate payment service for:</p>
+							<ul>
+								<li>One time payments</li>
+								<li>Subscriptions</li>
+							</ul>
+						</aside>
+					
+					</section>
+
+					<section>
+						
+						<h1>For businesses &amp; users…</h1>
+
+						<aside class="notes">
+							<p>This means that businesses and users:</p>
+							<ul>
+								<li>Less hassle with…</li>
+								<li>Standards compliance</li>
+								<li>Less steps in the user experience</li>
+								<li>Which leads to higher sales rates</li>
+							</ul>
+						</aside>
+
+					</section>
+
+					<section>
+						
+						<h1>For developers…</h1>
+
+						<aside class="notes">
+							<p>For us as developers</p>
+							<ul>
+								<li>Less steps to process</li>
+								<li>Something really easy to integrate</li>
+								<li>A wonderful RESTful API</li>
+							</ul>
+						</aside>
+
+					</section>
+
+				</section>
+
+				<!-- What you can actually do -->
+				<section>
+					<h1>So what to do…</h1>
+					<p class="fragment" >Create and account at <a href="http://bit.ly/1adI9J7" target="_blank" >http://bit.ly/1adI9J7</a></p>
+					<p class="fragment" >Grab your API keys from <a href="javascript:void;" >My Account &gt; Settings &gt; API Keys</a></p>
+					<aside class="notes">
+						<p>If you haven't already got an account and played with PAYMILL go register.</p>
+						<p>It's quick, free and ready to go the the moment you fill in the basics.</p>
+						<p>Once your all signed up, go into the dashboard and retrieve the all important API keys, as nothing is possible without them</p>
+					</aside>
+				</section>
+
+				<!-- Getting a transaction token -->
+				<section>
+
+					<section>
+						<h1>The first step…</h1>
+						<h2>The easy way or easier way</h2>
+						<aside class="notes">
+							<p>The first step to taking a payment is get a transaction token</p>
+							<p>The token is used as the root of all the transactions you can do, from payment through to refund</p>
+						</aside>
+					</section>
+
+					<section class="paybutton">
+						<h2>The easier way</h2>
+						<p>PAYMILL PayButton<sup><small>BETA</small></sup></p>
+						<pre><code data-trim>
+&lt;script
+src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"
+&gt;&lt;/script&gt;
+&lt;form action="path/To/ExampleScript.php" method="post">
+	&lt;script id="button"
+	    src="https://button.paymill.com/v1/"
+	    data-label="Pay with CreditCard"
+	    data-title="Buy our product"
+	    data-description="It's a great product"
+	    data-submit-button="Pay 2.50 GBP"
+	    data-amount="250"
+	    data-currency="GBP"
+	    data-public-key=PUBLIC_KEY
+	    data-elv="true" // Only for ELV payments
+	    data-lang="en-GB" // Optional language Code &gt;
+	&lt;/script&gt;
+&lt;/form&gt;</code></pre>
+						<p>Example at <a href="http://bit.ly/18Ieclm" target="_blank" >http://bit.ly/18Ieclm</a></p>
+						<aside class="notes">
+							<p>The fastest way is to drop in the above code and you now have a premade form.</p>
+						</aside>
+					</section>
+
+					<section class="paybutton">
+						<h2>The easier way</h2>
+						<p>Listen for the "token" event</p>
+						<pre><code data-trim>
+&lt;script&gt;
+$( "#button" ).on( "token", function( event, token ) {
+    // do something useful with the token
+});
+&lt;/script&gt;</code></pre>
+						<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+						<form >
+						    <script
+						        src="https://button.paymill.com/v1/"
+						        id="button"
+						        data-label="Pay with CreditCard"
+						        data-title="Buy our product"
+						        data-description="It's a great product"
+						        data-submit-button="Pay 2.50 GBP"
+						        data-amount="250"
+						        data-currency="GBP"
+						        data-public-key="43899924734e5b768f2302189f4bc51e" />
+						    </script>
+						</form>
+						
+						<aside class="notes">
+							<p>You then submit the form and wait for the "token" event, which returns the TOKEN: tok_</p>
+							<p>And there you have a premade form with associated button with click event that you can use the token with</p>
+							<ul>
+								Card Data
+								<li>Number: 4111 1111 1111 1111</li>
+								<li>CVC: 123</li>
+								<li>Expiry: 01/2015</li>
+							</ul>
+						</aside>
+
+					</section>
+
+					<section>
+						<h2>The easy way</h2>
+						<p>Build a form</p>
+						<pre><code data-trim>
+&lt;form id="payment-form" action="#" method="POST"&gt;
+&lt;input type="hidden" value="500" /&gt;&lt;!--Value--&gt;
+&lt;input type="hidden" value="GBP" /&gt;&lt;!--Currency--&gt;
+&lt;div class="form-row"&gt;&lt;label&gt;Card number&lt;/label&gt;&lt;!--Card Number--&gt;
+&lt;input class="card-number" type="text" size="20" /&gt;&lt;/div&gt;
+&lt;div class="form-row"&gt;&lt;label&gt;CVC&lt;/label&gt;&lt;!--CVC Number--&gt;
+&lt;input class="card-cvc" type="text" size="4" /&gt;&lt;/div&gt;	
+&lt;div class="form-row"&gt;&lt;label>Name&lt;/label&gt;&lt;!--Card Holders Name--&gt;
+&lt;input class="card-holdername" type="text" size="4" /&gt;&lt;/div&gt;
+&lt;div class="form-row"&gt;&lt;label&gt;Expiry date (MM/YYYY)&lt;/label&gt;
+&lt;!--Card Expiry (Month)--&gt;
+&lt;input class="card-expiry-month" type="text" size="2" /&gt;
+&lt;span&gt;/&lt;/span&gt;
+&lt;!--Card Expiry (Year)--&gt;
+&lt;input class="card-expiry-year" type="text" size="4" /&gt;&lt;/div&gt;
+&lt;button class="submit-button" type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+						<aside class="notes">
+							<p>You put together a form with the basic elements for a card payment</p>
+							<ul>
+								<li>Value whole value without decimal</li>
+								<li>4 Character Currency Reqresentation</li>
+								<li>Card Number</li>
+								<li>CVC Security Number</li>
+								<li>Card Number - Month and Year in MM/YYYY</li>
+							</ul>
+							<p>Optional variables included are</p>
+							<ul>
+								<li>Card Holders Name</li>
+							</ul>
+						</aside>
+					</section>
+
+					<section>
+						<h2>The easy way</h2>
+						<p>You add the JS bridge</p>
+						<pre><code data-trim>
+&lt;script
+src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"
+&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+	var PAYMILL_PUBLIC_KEY = PUBLIC_KEY;
+&lt;/script&gt;
+&lt;script src="https://bridge.paymill.com/"&gt;&lt;/script&gt;</code></pre>
+						<p>Validation</p>
+						<pre><code data-trim>
+&lt;script type="text/javascript"&gt;
+	// Card Number
+	paymill.validateCardNumber($('card-number').val()); 
+	// Card Expiry
+	paymill.validateExpiry(
+		$('card-expiry-month').val(),
+		$('card-expiry-year').val());
+&lt;/script&gt;</code></pre>
+						<aside class="notes">
+							<p>You add the JS Bridge with your Public Key, which will give you access to the PAYMILL functions</p>
+							<p>You can then validate all the inputs using the PAYMILL methods</p>
+						</aside>
+					</section>
+
+					<section>
+						<h2>The easy way</h2>
+						<p>Retrive the token</p>
+						<pre><code data-trim>
+&lt;script type="text/javascript"&gt;
+$(document).ready(function() {
+$("#payment-form").submit(function(event) {
+$('.submit-button').attr("disabled", "disabled"); // Deactivate submit
+paymill.createToken({
+number: $('.card-number').val(),	
+exp_month: $('.card-expiry-month').val(),
+exp_year: $('.card-expiry-year').val(),
+cvc: $('.card-cvc').val(),
+amount_int: $('.card-amount-int').val(),
+currency: $('.card-currency').val(),
+cardholder: $('.card-holdername').val()
+}, PaymillResponseHandler);
+return false;
+});
+});
+&lt;/script&gt;</code></pre>
+						<aside class="notes">
+							<p>You don't have to use jQuery to accomplish this, it's just here for ease</p>
+							<p>So you don't create too many keys with someone being click happy, disable the "submit" key</p>
+							<p>After that you send the parameters to the PAYMILL API via the paymill.createToken() function</p>
+						</aside>
+					</section>
+
+					<section>
+						<h2>The easy way</h2>
+						<p>Handle the token</p>
+						<pre><code data-trim>
+&lt;script type="text/javascript"&gt;
+function PaymillResponseHandler(error, result) {
+	if (error) {
+		// Shows the error above the form
+		$(".payment-errors").text(error.apierror);
+		$(".submit-button").removeAttr("disabled");
+	} else {
+		var form = $("#payment-form");
+		// Output token
+		var token = result.token;
+		// Insert token into form in order to submit to server
+		form.append("");	
+	}
+}
+&lt;/script&gt;</code></pre>
+						<aside class="notes">
+							<p>And just like with the PayButton we retrive the token</p>
+							<p>However when using the bridge directly we are returned an json object which always has to options</p>
+							<ul>
+								<li>error</li>
+								<li>token</li>
+							</ul>
+							<p>One is always null, so it is easy to find a success or the correct error code for the transaction</p>
+						</aside>
+					</section>
+
+					<section>
+						<h1>The hard way</h1>
+						<p>You can interact and do all this yourself</p>
+						<aside class="notes">
+							<p>You can choose to interact with the system yourself. Either using an existing wrapper library</p>
+							<p>Or making your own and connecting to the API endpoints</p>
+						</aside>
+					</section>
+
+				</section>
+
+				<section>
+
+					<section>
+						<h1>Make the payment</h1>
+						<p>Once we get our token</p>
+						<form id="token-payment-form">
+
+							<input class="card-amount-int" type="hidden" value="250" />
+							<input class="card-currency" type="hidden" value="GBP" />
+
+							<div class="form-row"><label>Card number</label>
+							<input class="card-number" type="text" size="20" value="4111111111111111" /></div>
+
+							<div class="form-row"><label>CVC</label>
+							<input class="card-cvc" type="text" size="4" value="123" /></div>
+
+							<div class="form-row"><label>Name</label>
+							<input class="card-holdername" type="text" size="4" value="Joe Bloggs"/></div>
+
+							<div class="form-row"><label>Expiry date (MM/YYYY)</label>
+							<input class="card-expiry-month" type="text" size="2" value="01"/>
+							<span></span>
+							<input class="card-expiry-year" type="text" size="4" value="2016" /></div>
+
+							<button class="submit-button" type="submit">Submit</button>
+
+						</form>
+
+						<p id="retrieved-token" ></p>
+						<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+						<script type="text/javascript" >
+							var PAYMILL_PUBLIC_KEY = '94594834558b0a74dc6be67d3dea1ace';
+						</script>
+						<script type="text/javascript" src="https://bridge.paymill.com/"></script>
+						<script type="text/javascript">
+						$(document).ready(function() {
+						  $("#token-payment-form").submit(function(event) {
+						    // Deactivate submit button to avoid further clicks
+						    $('.submit-button').attr("disabled", "disabled");
+
+						    paymill.createToken({
+						      number: $('.card-number').val(),  // required, ohne Leerzeichen und Bindestriche
+						      exp_month: $('.card-expiry-month').val(),   // required
+						      exp_year: $('.card-expiry-year').val(),     // required, vierstellig z.B. "2016"
+						      cvc: $('.card-cvc').val(),                  // required
+						      amount_int: $('.card-amount-int').val(),    // required, integer, z.B. "15" für 0,15 Euro 
+						      currency: $('.card-currency').val(),    // required, ISO 4217 z.B. "EUR" od. "GBP"
+						      cardholder: $('.card-holdername').val() // optional
+						    }, PaymillResponseHandler);                   // Info dazu weiter unten
+
+						    return false;
+						  });
+						});
+						var token = false;
+						function PaymillResponseHandler(error, result) {
+							console.log(result);
+						  if (error) {
+						    // Shows the error above the form
+						    $(".payment-errors").text(error.apierror);
+						    $(".submit-button").removeAttr("disabled");
+						  } else {
+						    var form = $("#token-payment-form");
+						    // Output token
+						    token = result.token;
+						    // Insert token into form in order to submit to server
+						    $('#retrieved-token').html('Token: '+token);
+						    var curl_example = "&lt;script&gt;";
+							curl_example = curl_example + "curl https://api.paymill.com/v2/transactions \\";
+							curl_example = curl_example + "-u a1324a5e9dc66956f809bf328da6bc1f: \\";
+							curl_example = curl_example + "-d \"amount=250\" \\";
+							curl_example = curl_example + "-d \"currency=GBP\" \\";
+							curl_example = curl_example + "-d \"description=Test Transaction\" \\";
+							curl_example = curl_example + "-d \"token="+token+"\"";
+							curl_example = curl_example + "&lt;/script&gt;";
+							$('execute_example').html(curl_example);
+						  }
+						}
+						</script>
+
+						<aside class="notes" >
+							<p>Once we get our token we can complete the second step of the process</p>
+						</aside>
+
+					</section>
+
+					<section>
+						<p>The libraries or endpoints found <a href="http://bit.ly/17NNSXg" >http://bit.ly/17NNSXg</a></p>
+						<p>cURL</p>
+						<pre><code data-trim>
+&lt;script&gt;
+curl https://api.paymill.com/v2/transactions \
+-u PRIVATE_SECRET_KEY: \
+-d "amount=250" \
+-d "currency=GBP" \
+-d "description=Test Transaction"
+-d "token=TOKEN" \
+&lt;/script&gt;</code></pre>
+						<p>PHP</p>
+						<pre><code data-trim>
+if (  isset( $_POST['paymillToken']) ) { $token = $_POST['paymillToken'];
+    require 'lib/Services/Paymill/Transactions.php';
+    $transactionsObject = new Services_Paymill_Transactions(
+    '&lt;PRIVATE_API_KEY | PRIVATE_TEST_KEY&gt;', 'https://api.paymill.com/v2/');
+	$params = array(
+        'amount'        => '250',   // E.g. "250" for 2.50 EUR!
+        'currency'      => 'GBP',   // ISO 4217
+        'token'         => $token,
+        'description'   => 'Test Transaction'
+    );
+    $transaction = $transactionsObject->create($params);
+    if ( isset( $transaction['status'] ) &amp;&amp; ( $transaction['status'] == 'closed') ) {
+        echo '<strong>transaction successful!</strong>';
+    }
+}</code></pre>
+
+						<aside class="notes">
+							<p>Now we have the token we can throw it into either of the cURL or the PHP scripts and complete</p>
+							<p>Execute example:</p>
+							<pre><code id="execute_example" data-trim>
+&lt;script&gt;
+curl https://api.paymill.com/v2/transactions \
+-u a1324a5e9dc66956f809bf328da6bc1f: \
+-d "amount=250" \
+-d "currency=GBP" \
+-d "description=Test Transaction"
+-d "token=TOKEN" \
+&lt;/script&gt;</code></pre>
+						</aside>
+					</section>
+
+				</section>
+
+				<section>
+					<h1>What else you can do…</h1>
+					<aside class="notes">
+						<p>This basic principle is what is used for everything else</p>
+						<p>It can be used to create offers and clients with subscriptions</p>
+						<p>Refund transactions</p>
+						<p>Basically everything available via the PAYMILL API or libraries follows this pattern</p>
+					</aside>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
